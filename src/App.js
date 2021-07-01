@@ -4,7 +4,7 @@ import DrawNum from './compornenets/DrawNum';
 import React, { useState } from 'react'; 
 
 function App() {
-  const [lottoNum, setLottoNum] = useState([0,0,0,0,0,0,0]);
+  const [lottoNum, setLottoNum] = useState({balls:[0,0,0,0,0,0], bonus:0});
 
   const setLottoNumState = (data) => {
     setLottoNum(data)
@@ -13,9 +13,9 @@ function App() {
   return (
     <div>
       <div className="wrap">
-        <MakeBall />
+        <MakeBall lottoNum={lottoNum}/>
       </div>
-      <DrawNum lottoNum={lottoNum} setLottoNumState={setLottoNumState}/>
+      <DrawNum setLottoNumState={setLottoNumState}/>
     </div>
   );
 }

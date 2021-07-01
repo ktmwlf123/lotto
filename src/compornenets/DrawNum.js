@@ -1,29 +1,43 @@
-const DrawNum = ({lottoNum, setLottoNumState}) => { // lottoNum = [0,0,0,0,0,0,0];
-    const drawRandomNum = () => {
-        const randomNumList = [];
-        lottoNum.map(() => {
-            let rNum = checkNum(randomNumList);
+const DrawNum = ({setLottoNumState}) => {
 
-            console.log(1, rNum);
-            randomNumList.push(rNum);
-        });
-    };
+    const array7 = [0,0,0,0,0,0,0];
 
     const checkNum = (data) => {
         
-        let randomNum = Math.floor(Math.random() * 44) + 1
-        let overlapFlag = false;
-        for(let i = 0; i < data.length; i++){
-            if(data.indexOf(randomNum) !== -1) overlapFlag = true;
+        let randomNum = pickNum();
+        for(let i = 0; i < data.length+1; i++){
+            if(data.indexOf(randomNum) !== -1){
+                i--;
+                randomNum = pickNum();
+            }else{
+                return randomNum;
+            }
+            
         }
-        console.log(2, randomNum);
-        if(overlapFlag){
-            checkNum(data);
-        } else {
-            console.log(3, randomNum);
-            return randomNum;
-        };
     };
+
+    const pickNum = () => {
+        return Math.floor(Math.random() * 44) + 1
+    }
+
+    const drawRandomNum = () => {
+        const randomNumList = [];
+
+        array7.forEach(() => {
+            let rNum = checkNum(randomNumList);
+            
+            randomNumList.push(rNum);
+        });
+        const sliceArray = randomNumList.slice(0,6);
+
+        sliceArray.sort(function(a, b) {
+            return a - b;
+          });
+        
+        setLottoNumState({balls: sliceArray, bonus:randomNumList[6]});
+    };
+
+    
 
     return(
         <div className="btnWrap">
